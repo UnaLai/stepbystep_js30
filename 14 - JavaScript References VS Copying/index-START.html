@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Reference VS Copy</title>
+</head>
+<body>
+
+  <script>
+    // start with strings, numbers and booleans
+    // 純值是傳值所以不會互相影響
+    let age = 20;
+    let age2 = age;
+    console.log(age,age2);
+    age = 30;
+    console.log(age,age2);
+
+    // Let's say we have an array
+    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+
+    // and we want to make a copy of it.
+
+    // You might think we can just do something like this:
+
+    // however what happens when we update that array?
+
+    // now here is the problem!
+
+    // oh no - we have edited the original array too!
+
+    // Why? It's because that is an array reference, not an array copy. They both point to the same array!
+
+    // So, how do we fix this? We take a copy instead!
+
+    // one way
+
+    // or create a new array and concat the old one in
+
+    // or use the new ES6 Spread
+
+    // now when we update it, the original one isn't changed
+
+    // The same thing goes for objects, let's say we have a person object
+
+    // with Objects
+    const person = {
+      name: 'Wes Bos',
+      age: 80
+    };
+
+    // and think we make a copy:
+
+    // how do we take a copy instead?
+
+    // We will hopefully soon see the object ...spread
+
+    // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+
+//此章節主要說明純值傳值，不會影響原對象；物件傳址，會影響原對象。
+//物件爲了不影響原對象，要把他的內容複製出來，但是會遇到淺複製的問題，我們需要用一些方式，完整複製
+
+const team = {
+  name: 'hhhh',
+  year : 2008,
+  intro :{
+    age: 20,
+    location: "tainan",
+  }
+};
+
+const team2 = Object.assign({},team);
+console.log(team,team2);
+
+team2.name='team2Name';
+console.log(team,team2);  //不會改到原本的
+
+team2.intro.age=30;
+console.log(team,team2); //兩個都變30了，因爲本來只有淺層複製，內層仍爲傳址
+
+//可以利用json格式來解決
+const team3 = JSON.parse(JSON.stringify(team));
+console.log(team3);
+team3.intro.age=40;
+console.log(team,team2,team3); //不會改到原本的
+
+
+
+
+  </script>
+
+</body>
+</html>

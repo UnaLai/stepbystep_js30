@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Whack A Mole!</title>
+    <link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1>Whack-a-mole! <span class="score">0</span></h1>
+    <button onClick="startGame()">Start!</button>
+
+    <div class="game">
+        <div class="hole hole1">
+            <div class="mole"></div>
+        </div>
+        <div class="hole hole2">
+            <div class="mole"></div>
+        </div>
+        <div class="hole hole3">
+            <div class="mole"></div>
+        </div>
+        <div class="hole hole4">
+            <div class="mole"></div>
+        </div>
+        <div class="hole hole5">
+            <div class="mole"></div>
+        </div>
+        <div class="hole hole6">
+            <div class="mole"></div>
+        </div>
+    </div>
+
+    <script>
+        const holes = document.querySelectorAll('.hole');
+        const scoreBoard = document.querySelector('.score');
+        const moles = document.querySelectorAll('.mole');
+        var timeUp = false;
+        let score = 0;
+
+        function randomNum(min, max) {
+            const randomResult = Math.floor(Math.random() * (max - min + 1) + min);
+            return randomResult;
+        }
+
+        function controlGophers() {
+            const time = randomNum(300 , 1000);
+            const chooseHole = randomNum(0, moles.length-1);
+            holes[chooseHole].classList.add('up');
+            setTimeout(()=>{
+              holes[chooseHole].classList.remove('up');
+              if(!timeUp){
+                controlGophers();
+              }else{
+                window.alert(`遊戲結束，恭喜你獲得${score}分`);
+              }
+            },time);
+        }
+
+        function bump(e){
+          this.parentNode.classList.remove('up');
+          score ++;
+          scoreBoard.textContent = score;
+        }
+
+        function startGame(){
+          scoreBoard.textContent = 0;
+          timeUp = false;
+          score = 0;
+          controlGophers();
+          setTimeout(() => {
+            timeUp = true;
+            console.log("end");
+          }, 5000);
+        }
+
+        moles.forEach(item => item.addEventListener('click',bump));
+    </script>
+</body>
+
+</html>

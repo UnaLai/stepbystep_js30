@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<script>
+const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+
+//得到資料放入陣列
+const cities = [];
+fetch(endpoint).then(response => response.json()).then(data => cities.push(...data));
+//... 是一種省略寫法，代表把內容一一展開
+
+
+//方法一：篩選出內容
+function filterContant(cities,words){
+  return cities.filter(function(item){
+    const matchRule = new RegExp(words, 'gi');
+    return item.city.match(matchRule) || item.state.match(matchRule);
+  });
+}
+
+//方法二：顯示出內容
+function displayContant(){
+    const matchArray = filterContant(cities,this.value);
+    // console.log(matchArray);
+    const htmlContent = matchArray.map(item => {
+      const regex = new RegExp(this.value,'gi');
+      const cityName = item.city.replace(regex,`<span class="hl">${this.value}</span>`);
+      const stateName = item.state.replace(regex, `<span class="hl">${this.value}</span>`);
+      const population = item.population.toString();
+      return `
+      <li>
+        <span class="name">${cityName}, ${stateName}</span>
+        <span class="population">${population}</span>
+      </li>
+      `;
+    }).join('');
+    suggestions.innerHTML = htmlContent;
+}
+
+//監聽
+const searchInput = document.querySelector('.search');
+const suggestions = document.querySelector('.suggestions');
+searchInput.addEventListener('change',displayContant);
+searchInput.addEventListener('keyup',displayContant);
+
+//踩雷記錄：
+
+
+</script>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+</head>
+<body>
+
+  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    function makeGreen() {
+      const p = document.querySelector('p');
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+    }
+
+    // Regular
+
+    // Interpolated
+
+    // Styled
+    // console.log('%c helloword','font-size:100px; background:red;');
+
+    // warning!
+    console.warn("no");
+
+    // Error :|
+    console.error("ohno");
+
+    // Info
+
+    // Testing
+    console.assert(1===1,"wrong"); //只有錯誤的時候才會印出後面的字
+
+    // clearing
+    console.clear(); //清掉所有的印出來的東西
+
+    // Viewing DOM Elements
+    const p = document.querySelector('p');
+    console.log(p); //印出 html element
+    console.dir(p); //印出屬性
+
+    // Grouping together
+     dogs.forEach(dog=>{
+       console.groupCollapsed(`${dog.name}`);
+       console.log(`my name is ${dog.name}`);
+       console.log(`${dog.name} is ${dog.age} years old`);
+       console.groupEnd();
+     })
+
+    // counting
+    console.count('a');
+    console.count('a');
+    console.count('b');
+    console.count('a');
+    console.count('b');
+    console.count('b');
+    console.count('b');
+    console.count('b');
+    console.count('b');
+    console.count('b');
+    console.count('a');
+
+    // timing
+    console.time('timer');
+    //dosomething
+    console.timeEnd('timer');
+
+    console.table(dogs);
+
+  </script>
+</body>
+</html>
